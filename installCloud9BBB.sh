@@ -31,7 +31,7 @@ cd node-v0.8.22
 make
  make install
 cd ${HOME}
- rm node-v08.22*
+ rm -R node-v0.8.22*
 elif ! node --version |grep -Fxq v0.8.22 ; then
 echo "Node Not right version, Stopping Script"
 exit
