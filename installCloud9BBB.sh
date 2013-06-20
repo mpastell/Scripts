@@ -17,8 +17,8 @@ dpkg -l | grep build-essential >/dev/null || deb_pkgs="${deb_pkgs}build-essentia
 dpkg -l | grep libxml2-dev >/dev/null || deb_pkgs="${deb_pkgs}libxml2-dev "
 if [ "${deb_pkgs}" ] ; then
   echo "Installing: ${deb_pkgs}"
-	sudo apt-get update
-	sudo apt-get -y install ${deb_pkgs}
+	 apt-get update
+	 apt-get -y install ${deb_pkgs}
 fi
 
 cd ${HOME}
@@ -29,9 +29,9 @@ tar -xvzf node-v0.8.22.tar.gz
 cd node-v0.8.22
 ./configure --without-snapshot
 make
-sudo make install
+ make install
 cd ${HOME}
-sudo rm node-v08.22*
+ rm node-v08.22*
 elif ! node --version |grep -Fxq v0.8.22 ; then
 echo "Node Not right version, Stopping Script"
 exit
@@ -42,25 +42,25 @@ fi
 if  ! npm -g ls |grep -Fxq libxml@0.0.7 ; then
 echo "Installing npm libxml" 
 cd  ${HOME}
-sudo git clone https://github.com/ajaxorg/node-libxml.git
+ git clone https://github.com/ajaxorg/node-libxml.git
 cd node-libxml
 git checkout v0.0.7
-sudo rm .gitmodules
+ rm .gitmodules
 cd support
-sudo git clone https://github.com/NathanGillis/o3.git
+ git clone https://github.com/NathanGillis/o3.git
 cd ..
-sudo npm install -g
+ npm install -g
 cd ~
-sudo rm node-libxml
+ rm node-libxml
 fi
 
 if [ ! -f /etc/cloud9 ] ; then
 echo "Starting Cloud9 Install"
 cd /etc
-sudo git clone https://github.com/ajaxorg/cloud9.git
+ git clone https://github.com/ajaxorg/cloud9.git
 cd cloud9
-sudo npm install
-sudo npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 | "/bin/sh"}'
+ npm install
+ npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 | "/bin/sh"}'
 npm install asyncjs@0.0.8
 echo "Changing Workplace Location to ~/workplace"
 sudo sed -i '19s/workspace/home\/ubuntu\/workplace/' configs/default.js
@@ -73,7 +73,7 @@ echo "Adding Start on boot script"
 cd /etc/init
 wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
 else 
-echo "Cloud9 Folder Exists, Attempting reinstall";
+#echo "Cloud9 Folder Exists, Attempting reinstall";
 #cd /etc/cloud9
 #sudo npm install
 #sudo npm update
