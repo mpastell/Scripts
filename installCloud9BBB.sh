@@ -51,7 +51,7 @@ cd support
 cd ..
  npm install -g
 cd ~
- rm node-libxml
+ rm -R node-libxml
 fi
 
 if [ ! -f /etc/cloud9 ] ; then
