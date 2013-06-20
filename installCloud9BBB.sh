@@ -64,15 +64,13 @@ cd cloud9
  npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 | "/bin/sh"}'
 npm install asyncjs@0.0.8
 echo "Changing Workplace Location to ~/workplace"
-sudo sed -i '19s/workspace/home\/ubuntu\/workplace/' configs/default.js
-sudo sed -i '23s/localhost/0.0.0.0/' default.js
+sed -i '19s/(argv.w && path.resolve(process.cwd(), argv.w)) || process.cwd()/"home\/ubuntu\/workplace"/' configs/default.js
+ sed -i '23s/localhost/0.0.0.0/' configs/default.js
 cd /etc/init
-sudo wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
+wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
 echo "Cloud9 Added to beagle bone, Workplace exist at  ~/workspace"
 echo "To move workpace run sudo sed -i '19s/\/home\/ubuntu\/workspace/my_workspace_location/' default.js"
 echo "Adding Start on boot script"
-cd /etc/init
-wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
 else 
 #echo "Cloud9 Folder Exists, Attempting reinstall";
 #cd /etc/cloud9
