@@ -59,7 +59,8 @@ echo "Starting Cloud9 Install"
 cd /etc
  git clone https://github.com/ajaxorg/cloud9.git
 cd cloud9
- npm install
+ npm install || true
+ echo "Installing missing node modules for cloud9"
  npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 | "/bin/sh"}'
 npm install asyncjs@0.0.8
 echo "Changing Workplace Location to ~/workplace"
