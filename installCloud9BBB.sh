@@ -39,7 +39,7 @@ else
 echo "Node Installed and Right Version"
 fi
 
-if  ! npm -g ls |grep -Fxq libxml@0.0.7 ; then
+if ! npm -g ls |grep -Fq  libxml@0.0.7 ; then
 echo "Installing npm libxml" 
 cd  ${HOME}
  git clone https://github.com/ajaxorg/node-libxml.git
@@ -55,27 +55,31 @@ cd ~
 fi
 
 if [ ! -d /etc/cloud9 ] ; then
-echo "Starting Cloud9 Install"
 cd /etc
  git clone https://github.com/ajaxorg/cloud9.git
 cd cloud9
  npm install || true
- echo "Installing missing node modules for cloud9"
- npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 | "/bin/sh"}'
-npm install asyncjs@0.0.8
-echo "Changing Workplace Location to ~/workplace"
-sed -i '19s/(argv.w && path.resolve(process.cwd(), argv.w)) || process.cwd()/"home\/ubuntu\/workplace"/' configs/default.js
- sed -i '23s/localhost/0.0.0.0/' configs/default.js
+ echo "Installing Missing node modules for cloud9"
+ npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 " || true"| "/bin/sh"}'
+ echo "Installing Node Modules that always seem to fail"
+ npm install asyncjs@0.0.8
+ npm install asyncjs@0.0.8
+ sed -i '19s/(argv.w && path.resolve(process.cwd(), argv.w)) || process.cwd()/"home\/ubuntu\/workspace"/' configs/default.js
+ sed -i '22s/localhost/0.0.0.0/' configs/default.js
+ echo "Adding Start on boot script"
 cd /etc/init
-wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
+ wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
 echo "Cloud9 Added to beagle bone, Workplace exist at  ~/workspace"
 echo "To move workpace run sudo sed -i '19s/\/home\/ubuntu\/workspace/my_workspace_location/' default.js"
-echo "Adding Start on boot script"
+
+cd /home/ubuntu/
+mkdir workspace
 else 
-#echo "Cloud9 Folder Exists, Attempting reinstall";
+echo "Cloud9 Folder Exists, Attempting reinstall";
 #cd /etc/cloud9
 #sudo npm install
 #sudo npm update
 echo "Check workspace location, ip that are able to connect and startup script"
 fi
+
 echo "Script Finished"
