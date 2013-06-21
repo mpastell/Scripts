@@ -54,7 +54,7 @@ cd ~
  rm -R node-libxml
 fi
 
-if [ ! -f /etc/cloud9 ] ; then
+if [ ! -d /etc/cloud9 ] ; then
 echo "Starting Cloud9 Install"
 cd /etc
  git clone https://github.com/ajaxorg/cloud9.git
