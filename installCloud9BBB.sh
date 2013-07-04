@@ -63,7 +63,6 @@ cd cloud9
  npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 " || true"| "/bin/sh"}'
  echo "Installing Node Modules that always seem to fail"
  npm install asyncjs@0.0.8
- npm install asyncjs@0.0.8
  sed -i '19s/(argv.w && path.resolve(process.cwd(), argv.w)) || process.cwd()/"home\/ubuntu\/workspace"/' configs/default.js
  sed -i '22s/localhost/0.0.0.0/' configs/default.js
  echo "Adding Start on boot script"
