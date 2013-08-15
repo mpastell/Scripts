@@ -54,8 +54,10 @@ if [ ! -d /etc/node_cloud9 ] ; then
 	cd `dirname $0`
 	tar -xvzf cloud9.tar.gz
 	mv cloud9 /etc/node_cloud9/
+	mv default_root.js /etc/node_cloud9/cloud9/configs/
 	if ! node --version |grep -Fxq v0.8.22 ; then
 		mv cloud9.sh.conf /ect/init
+		mv cloud9_root.sh.conf /etc/init
 	else 
 	   echo "Node v0.8.22 is installed globally on device. Please Create conf File"
 	fi
