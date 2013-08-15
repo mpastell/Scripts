@@ -22,63 +22,41 @@ if [ "${deb_pkgs}" ] ; then
 fi
 
 cd ${HOME}
+
 if [ ! -f /usr/local/bin/node ] ; then
-echo "Node Doesn't Exist Installing Node"
-wget http://nodejs.org/dist/v0.8.22/node-v0.8.22.tar.gz
-tar -xvzf node-v0.8.22.tar.gz
-cd node-v0.8.22
-./configure --without-snapshot
-make
- make install
-cd ${HOME}
- rm -R node-v0.8.22*
-elif ! node --version |grep -Fxq v0.8.22 ; then
-echo "Node Not right version, Stopping Script"
-exit
-else 
-echo "Node Installed and Right Version"
+	echo "Node Doesn't Exist Installing Node v0.10.15"
+	wget http://nodejs.org/dist/v0.10.15/node-v0.10.15.tar.gz
+	tar -xvzf node-v0.10.15.tar.gz
+	cd node-v0.10.15
+	./configure --without-snapshot
+	make
+	make install
+	cd ${HOME}
+	rm -R node-v0.10.15*
 fi
-
-if ! npm -g ls |grep -Fq  libxml@0.0.7 ; then
-echo "Installing npm libxml" 
-cd  ${HOME}
- git clone https://github.com/ajaxorg/node-libxml.git
-cd node-libxml
-git checkout v0.0.7
- rm .gitmodules
-cd support
- git clone https://github.com/NathanGillis/o3.git
-cd ..
- npm install -g
-cd ~
- rm -R node-libxml
-fi
-
-if [ ! -d /etc/cloud9 ] ; then
-cd /etc
- git clone https://github.com/ajaxorg/cloud9.git
-cd cloud9
- npm install || true
- echo "Installing Missing node modules for cloud9"
- npm ls 2>&1 | grep -o "missing:\s.*,\s" | awk '{gsub(",","",$2); print "npm install " $2 " || true"| "/bin/sh"}'
- echo "Installing Node Modules that always seem to fail"
- npm install asyncjs@0.0.8
- sed -i '19s/(argv.w && path.resolve(process.cwd(), argv.w)) || process.cwd()/"home\/ubuntu\/workspace"/' configs/default.js
- sed -i '22s/localhost/0.0.0.0/' configs/default.js
- echo "Adding Start on boot script"
-cd /etc/init
- wget https://raw.github.com/NathanGillis/Scripts/master/cloud9.sh.conf
-echo "Cloud9 Added to beagle bone, Workplace exist at  ~/workspace"
-echo "To move workpace run sudo sed -i '19s/\/home\/ubuntu\/workspace/my_workspace_location/' default.js"
-
-cd /home/ubuntu/
-mkdir workspace
-else 
-echo "Cloud9 Folder Exists, Attempting reinstall";
-#cd /etc/cloud9
-#sudo npm install
-#sudo npm update
-echo "Check workspace location, ip that are able to connect and startup script"
+if [ ! -d /etc/node_cloud9 ] ; then
+	cd /etc
+	mkdir node_cloud9
+	if ! node --version |grep -Fxq v0.8.22 ; then
+		echo "Node v0.8.22 Doesn't Exist , Installing"
+		cd node_cloud9
+		wget http://nodejs.org/dist/v0.8.22/node-v0.8.22.tar.gz
+		tar -xvzf node-v0.8.22.tar.gz
+		cd node-v0.8.22
+		./configure --without-snapshot
+		make
+	fi
+	cd `dirname $0`
+	tar -xvzf cloud9.tar.gz
+	mv cloud9 /etc/node_cloud9/
+	if ! node --version |grep -Fxq v0.8.22 ; then
+		mv cloud9.sh.conf /ect/init
+	else 
+	   echo "Node v0.8.22 is installed globally on device. Please Create conf File"
+	fi
+	echo "Creationg Workspace a /home/ubuntu"	
+	cd /home/ubuntu/
+	mkdir workspace
 fi
 
 echo "Script Finished"
