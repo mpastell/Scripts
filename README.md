@@ -5,9 +5,10 @@ Scripts, Mostly for dealing with Beagle Bone Black
 
 Cloud9 Install 
 --------------
-Sometimes installCloud9BBB.sh  doesn't get all required modules.
-Run Cloud9 Server to find missing modules, just npm install <module> ,Repet till no more required modules then reboot system.
+Clone Repo and run script to install. Cloud9 Build Uses Node v0.8.22.
+Script will add Node if Not installed on device. 
 <pre>
-cd /etc/cloud9
-node server.js
+git clone git@github.com:NathanGillis/Scripts.git
+cd Scripts
+sudo ./installCloud9BBB.sh
 </pre>
