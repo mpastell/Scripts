@@ -20,6 +20,11 @@ if [ "${deb_pkgs}" ] ; then
 	 apt-get update
 	 apt-get -y install ${deb_pkgs}
 fi
+if dpkg -l | grep -Fxq apache2 ; then
+   echo "Removing Apache2" 
+    apt-get remove apache2
+    apt-get autoremove
+fi
 
 cd ${HOME}
 
