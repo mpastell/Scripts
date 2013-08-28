@@ -29,15 +29,15 @@ fi
 cd ${HOME}
 
 if [ ! -f /usr/local/bin/node ] ; then
-	echo "Node Doesn't Exist Installing Node v0.10.15"
-	wget http://nodejs.org/dist/v0.10.15/node-v0.10.15.tar.gz
-	tar -xvzf node-v0.10.15.tar.gz
-	cd node-v0.10.15
+	echo "Node Doesn't Exist Installing Node v0.10.17"
+	wget http://nodejs.org/dist/v0.10.17/node-v0.10.17.tar.gz
+	tar -xvzf node-v0.10.17.tar.gz
+	cd node-v0.10.17
 	./configure --without-snapshot
 	make
 	make install
 	cd ${HOME}
-	rm -R node-v0.10.15*
+	rm -R node-v0.10.17*
 fi
 if [ ! -d /etc/node_cloud9 ] ; then
 	cd /etc
